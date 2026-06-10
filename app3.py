@@ -219,11 +219,12 @@ def render_modulo_2d():
             r2 = 1.0 - (ssr / sst) if sst != 0 else 0.0
             r2_adj = 1.0 - ((1.0 - r2) * (n_dados - 1) / dof) if dof > 0 else 0.0
             r2_tablecurve = 1.0 - ((1.0 - r2) * (n_dados - 1) / (dof - 1)) if dof > 1 else 0.0
+            
             syx = np.sqrt(ssr / dof) if dof > 0 else 0.0
             
-            f_snedecor = ((sst - ssr) / (n_params - 1)) / (ssr / dof) if (dof > 0 and n_params > 1 and ssr != 0) else 0.0
-            perr = np.sqrt(np.diag(pcov)) if pcov is not None else np.zeros(n_params)
+            f_snedecor = ((sst - ssr) / (n_params)) / (ssr / dof) if (dof > 0 and n_params > 0 and ssr > 0) else 0.0
             
+            perr = np.sqrt(np.diag(pcov)) if pcov is not None else np.zeros(n_params)
             p_values = []
             for i in range(n_params):
                 if perr[i] != 0:
@@ -437,7 +438,7 @@ def render_modulo_3d():
             r2_tablecurve = 1.0 - ((1.0 - r2) * (n_dados - 1) / (dof - 1)) if dof > 1 else 0.0
             syx = np.sqrt(ssr / dof) if dof > 0 else 0.0
             
-            f_snedecor = ((sst - ssr) / (n_params - 1)) / (ssr / dof) if (dof > 0 and n_params > 1 and ssr != 0) else 0.0
+            f_snedecor = ((sst - ssr) / (n_params)) / (ssr / dof) if (dof > 0 and n_params > 0 and ssr > 0) else 0.0
             perr = np.sqrt(np.diag(pcov)) if pcov is not None else np.zeros(n_params)
             
             alpha = 1.0 - (conf_level / 100.0)
